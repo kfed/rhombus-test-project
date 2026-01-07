@@ -30,6 +30,7 @@
 
 ---
 
+
 ## 2. Automation Prioritization
 
 ### What to Automate First
@@ -37,7 +38,7 @@
 Note that not all transformation types need to be exhaustively tested - prioritise and build them in order of the mostly commonly used types in production.
 - **API Tests:** Ensure backend endpoints are stable. Does not have to be extensive, more of a smoke test as a minimum initially. After that, move on to more tests that are hard to do via the UI (e.g. try to access another user's projects, negative tests for unusual requests/responses, mock responses, etc.)
 - **Data Validation Script:** Automate checks for data correctness after ingestion and transformation.
-- **Core AI Model Prompts:** This is a lower priority and would be done after the above have sufficient coverage.
+- **Core AI Model Prompts:** This is a lower priority and would be done after the above have sufficient coverage. Rationale is that the AI is an assistant and is optional - however the user needs to always be able to manually create workflows (and that functionality is also needed for AI to also be able to do it).
 
 ### What Not to Automate Yet
 - **UI Testing for Third Party Integrations:** Testing AWS, Azure and Google buckets receive the files is a very low priority for UI automation. Testing is mainly the responsibility for the third parties, however monitors should be placed in production for errors (e.g. logs).
@@ -46,6 +47,7 @@ Note that not all transformation types need to be exhaustively tested - prioriti
 
 
 ---
+
 
 ## 3. Test Layering Strategy
 
@@ -89,6 +91,34 @@ Confidence in the system is low from such a check.
 - **Reaching Stability:** Being specific and focusing on logical node setups should have less brittleness even if there is a model updates or minor UI update to functionality.
 - **What to Avoid:** Ambiguous and vague prompts with little detail.
 - **Keeping it Real... and Deterministic:** As mentioned above, be really specific with the prompts and use Rhombus-specific language where possible (e.g. 'create a "Normalize Data Transform" node that is linked to ...')
+
+---
+
+## 6. Test Reliability and Maintenance
+
+### Common Causes of Flaky Tests in Rhombus AI
+
+- **Dynamic UI Elements:** Elements that load asynchronously or change state (e.g. notifications like "Pipeline completed") may not be ready when assertions run. Sections like the dashboard change dynamically and will be difficult to verify correctly unless the tests are heavily controlled.
+- **Network Latency:** API responses or data ingestion may be delayed, causing timeouts or race conditions.
+- **AI Output Variability:** Non-deterministic AI-assisted features can produce slightly different results on each run.
+- **Test Data Dependencies:** Tests relying on shared or mutable data can interfere with each other.
+- **Selector Instability:** UI changes or non-unique selectors can cause tests to interact with the wrong elements.
+- **Improper Clean Up:** All user data must be returned to its original state after each test execution run. If not properly done then this can interfere with future run and give unexpected results and failures.
+
+### Detecting Flakiness Over Time
+
+- **Test Reruns:** Configure CI to rerun failed tests automatically and track if failures are intermittent.
+- **Flakiness Dashboards:** Use test reporting tools to visualize and track test pass/fail rates over time.
+- **Failure Patterns:** Analyze CI logs for tests that fail inconsistently or only under certain conditions.
+
+### Reducing, Quarantining, or Eliminating Flaky Tests
+
+- **Stabilize Selectors:** Use robust, unique selectors and avoid relying on text or position alone.
+- **Explicit Waits:** Wait for elements or network responses to be ready before interacting or asserting.
+- **Isolate Test Data:** Use unique or isolated test data for each run to prevent cross-test interference.
+- **Quarantine Flaky Tests:** Move persistently flaky tests to a quarantine suite so they don’t block releases, and prioritize fixing them.
+- **Review and Refactor:** Regularly review flaky tests, refactor for stability, or remove low-value tests that cannot be stabilized.
+- **Mock External Dependencies:** Where possible, mock APIs or AI outputs to reduce variability.
 
 ---
 
