@@ -27,9 +27,7 @@
 - **Regression Likelihood:** Medium since many features can change what the model does: an update to the AI Model as well as changes to all other in application features could change how the prompts are followed.
 - **Mitigation Layer(s):** Regression tests with fixed prompts and output which outlines the exact node setup.
 
-
 ---
-
 
 ## 2. Automation Prioritization
 
@@ -45,9 +43,7 @@ Note that not all transformation types need to be exhaustively tested - prioriti
 - **Currently Unused Features:** If any features are not used or unavailable, there is no need to automate them unless a production release is planned soon.
 - **All Other AI Capabilities:** AI functionality is a lower priority to exhaustively test and the focus should be on key AI prompts and support functions. Tests for the AI feature will be more brittle than tests for other features.
 
-
 ---
-
 
 ## 3. Test Layering Strategy
 
@@ -81,7 +77,6 @@ Confidence in the system is low from such a check.
 - **Goal:** Run all of the tests after hours so that time is not a factor (or in an ad-hoc manner prior to a release or to confirm an issue with the previous night's run). The next morning, a report can highlight any issues that need addressing.
 - **Release Blocking:** Any issue here is not necessarily a blocker. Each issue would have to be reviewed to ensure its valid and not a one off issue (e.g. server went down for maintenance during the test run). The idea here would be to have these tests regularly returning green results to inspire confidence.
 
-
 ---
 
 ## 5. Testing AI-Driven Behavior
@@ -103,22 +98,22 @@ Confidence in the system is low from such a check.
 - **AI Output Variability:** Non-deterministic AI-assisted features can produce slightly different results on each run.
 - **Test Data Dependencies:** Tests relying on shared or mutable data can interfere with each other.
 - **Selector Instability:** UI changes or non-unique selectors can cause tests to interact with the wrong elements.
-- **Improper Clean Up:** All user data must be returned to its original state after each test execution run. If not properly done then this can interfere with future run and give unexpected results and failures.
+- **Improper Clean Up:** All user data must be returned to its original state after each test execution run. If not properly done then this can interfere with future runs and give unexpected results and failures.
 
 ### Detecting Flakiness Over Time
 
 - **Test Reruns:** Configure CI to rerun failed tests automatically and track if failures are intermittent.
-- **Flakiness Dashboards:** Use test reporting tools to visualize and track test pass/fail rates over time.
+- **Flakiness Dashboards:** Use test reporting tools to visualize and track test pass/fail rates over time. At the very least, the team should view the reports generated each morning following the previous night's run.
 - **Failure Patterns:** Analyze CI logs for tests that fail inconsistently or only under certain conditions.
 
 ### Reducing, Quarantining, or Eliminating Flaky Tests
 
 - **Stabilize Selectors:** Use robust, unique selectors and avoid relying on text or position alone.
-- **Explicit Waits:** Wait for elements or network responses to be ready before interacting or asserting.
-- **Isolate Test Data:** Use unique or isolated test data for each run to prevent cross-test interference.
-- **Quarantine Flaky Tests:** Move persistently flaky tests to a quarantine suite so they don’t block releases, and prioritize fixing them.
+- **Explicit Waits:** Wait for elements or network responses to be ready before interacting or asserting. This is easy in Playwright since this feature is built into the tool.
+- **Isolate Test Data:** Use unique or isolated test data for each run to prevent cross-test interference. Also clean up test data before and/or after test execution to ensure the same state is reached before any new tests are run.
+- **Quarantine Flaky Tests:** Move persistently flaky tests to a quarantine suite so they don’t block releases, and prioritize fixing them. Tests for broken features that are low priority to fix should also be quarantined (because ideally these should be ignored if the fix for the issues are being postponed).
 - **Review and Refactor:** Regularly review flaky tests, refactor for stability, or remove low-value tests that cannot be stabilized.
-- **Mock External Dependencies:** Where possible, mock APIs or AI outputs to reduce variability.
+- **Mock External Dependencies:** For certain features that need more control, consider mocking API responses to reduce variability.
 
 ---
 
