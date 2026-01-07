@@ -35,7 +35,7 @@
 ### What to Automate First
 - **Critical UI User Flows:** Automate register/login, data input, transformation and data output first, since these are all key functionality that users will frequently perform and therefore the highest risk and reward. 
 Note that not all transformation types need to be exhaustively tested - prioritise and build them in order of the mostly commonly used types in production.
-- **API Tests:** Ensure backend endpoints are stable. Does not have to be extensive, more of a smoke test as a minimum.
+- **API Tests:** Ensure backend endpoints are stable. Does not have to be extensive, more of a smoke test as a minimum initially. After that, move on to more tests that are hard to do via the UI (e.g. try to access another user's projects, negative tests for unusual requests/responses, mock responses, etc.)
 - **Data Validation Script:** Automate checks for data correctness after ingestion and transformation.
 - **Core AI Model Prompts:** This is a lower priority and would be done after the above have sufficient coverage.
 
