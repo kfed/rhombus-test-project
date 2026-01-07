@@ -26,37 +26,36 @@ rhombus-test-project/
 
 - **Run all tests:**
   ```bash
-  npx playwright test
+  npm run test
   ```
 
 - **Run tests in headed mode:**
   ```bash
-  npx playwright test --headed
+  npm run test:headed
   ```
 
 - **View HTML report:**
   ```bash
-  npx playwright show-report
+  npm run report
   ```
 
 ## Test Data
 
-- Credentials are stored in `fixtures/user.json`.
+- Credentials and csv files are stored in `fixtures/user.json`.
 
 ## Adding Tests
 
-- Add new test files in the `tests/` directory.
-- Use the Page Object Model in `pages/` for maintainability.
+- Add new UI test files in the `ui-tests/` directory.
+- Add new API test files in the 'api-tests/' diretory.
+- Add new data validation test files in the 'data-validation/' diretory.
+- Use the Page Object Model in `pages/` for maintainability of UI tests.
 
-## CI/CD
-
-- Ensure tests run in headless mode for CI.
-- Reports are generated in HTML format for review.
 
 ## Troubleshooting
 
-- If browsers are missing, run `npx playwright install chromium`.
-- For flaky tests, check selectors and add appropriate waits.
+- Ensure you have:
+1. Cloned the project completely from https://github.com/kfed/rhombus-test-project.git
+2. Run the setup command in step 1 above ("npm run setup"). Simply run it in your terminal in the parent directory of the cloned project.
 
 ---
 
