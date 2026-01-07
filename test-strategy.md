@@ -109,7 +109,7 @@ Confidence in the system is low from such a check.
 ### Reducing, Quarantining, or Eliminating Flaky Tests
 
 - **Stabilize Selectors:** Use robust, unique selectors and avoid relying on text or position alone.
-- **Explicit Waits:** Wait for elements or network responses to be ready before interacting or asserting. This is easy in Playwright since this feature is built into the tool.
+- **Explicit Waits:** Wait for elements or network responses to be ready before interacting or asserting. This is easy in Playwright since this feature is built into the tool (e.g. using "await" for async execution).
 - **Isolate Test Data:** Use unique or isolated test data for each run to prevent cross-test interference. Also clean up test data before and/or after test execution to ensure the same state is reached before any new tests are run.
 - **Quarantine Flaky Tests:** Move persistently flaky tests to a quarantine suite so they don’t block releases, and prioritize fixing them. Tests for broken features that are low priority to fix should also be quarantined (because ideally these should be ignored if the fix for the issues are being postponed).
 - **Review and Refactor:** Regularly review flaky tests, refactor for stability, or remove low-value tests that cannot be stabilized.
