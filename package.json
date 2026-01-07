@@ -2,7 +2,8 @@
   "name": "rhombus-test-project",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": { 
+  "scripts": {
+    "setup": "npm install @playwright/test && npm install && npx playwright install chromium",
     "test": "npx playwright test",
     "test:headed": "npx playwright test --headed",
     "test:debug": "npx playwright test --debug"
@@ -13,5 +14,8 @@
   "description": "A collection of Playwright browser and API tests for Rhombus AI's web application.",
   "devDependencies": {
     "playwright": "^1.57.0"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.57.0"
   }
 }
