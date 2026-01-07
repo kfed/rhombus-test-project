@@ -6,7 +6,7 @@ This project contains automated Playwright tests for the Rhombus AI web applicat
 
 ```
 rhombus-test-project/
-├── tests/         # Test files
+├── ui-tests/      # UI Test files
 ├── pages/         # Page Object Model files
 ├── fixtures/      # Test data (e.g., user.json)
 ├── utils/         # Helper functions

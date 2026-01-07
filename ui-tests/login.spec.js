@@ -6,6 +6,6 @@ test('Login workflow', async ({ page }) => {
   const loginPage = new LoginPage(page);
   await loginPage.goto();
   await loginPage.login(user.username, user.password);
-  await expect(page).toHaveURL(/dashboard/);
-  await expect(page.locator('text=Welcome')).toBeVisible();
+  await expect(page).toHaveURL(/redirect/);
+  await expect(page.locator('span:has-text("Dashboard")')).toBeVisible();
 });

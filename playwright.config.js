@@ -1,6 +1,6 @@
 /** @type {import('@playwright/test').PlaywrightTestConfig} */
 const config = {
-  testDir: './tests',
+  testDir: './ui-tests',
   timeout: 30000,
   retries: 0,
   use: {
