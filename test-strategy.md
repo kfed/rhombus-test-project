@@ -32,8 +32,9 @@
 ## 2. Automation Prioritization
 
 ### What to Automate First
-- **Critical UI User Flows:** Automate register/login and password reset, data input, transformation and data output first, since these are all key functionality that users will frequently perform and therefore the highest risk and reward. Dashboard and Settings screen should also be tested but with lower priority.
+- **Critical UI User Flows:** Firstly automate register/login and password reset, create/delete/search projects, data input, transformation and data output. As these are all key functionality that users will frequently perform and therefore the highest risk and reward. 
 Note that not all transformation types need to be exhaustively tested - prioritise and build them in order of the mostly commonly used types in production.
+- **Other Features:**  Features like Dashboard, Settings, Themes and links (e.g. Docs/Tutorial) need to be tested but with lower priority and intensity.
 - **API Tests:** Ensure backend endpoints are stable. Does not have to be extensive, more of a smoke test as a minimum initially. After that, move on to more tests that are hard to do via the UI (e.g. try to access another user's projects, negative tests for unusual requests/responses, mock responses, etc.)
 - **Data Validation Script:** Automate checks for data correctness after ingestion and transformation.
 - **Core AI Model Prompts:** This is a lower priority and would be done after the above have sufficient coverage. Rationale is that the AI is an assistant and is optional - however the user needs to always be able to manually create workflows (and that functionality is also needed for AI to also be able to do it).
