@@ -1,0 +1,17 @@
+{
+  "name": "rhombus-test-project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": { 
+    "test": "npx playwright test",
+    "test:headed": "npx playwright test --headed",
+    "test:debug": "npx playwright test --debug"
+  },
+  "keywords": [],
+  "author": "Kaan Duran",
+  "license": "ISC",
+  "description": "A collection of Playwright browser and API tests for Rhombus AI's web application.",
+  "devDependencies": {
+    "playwright": "^1.57.0"
+  }
+}

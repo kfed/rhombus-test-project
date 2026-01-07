@@ -1,0 +1,30 @@
+# Node.js dependencies
+node_modules/
+
+# Playwright reports and test results
+playwright-report/
+test-results/
+blob-report/
+reports/
+
+# Playwright cache and auth
+playwright/.cache/
+playwright/.auth/
+
+# Build artifacts (TypeScript)
+dist/
+out/
+
+# Logs
+*.log
+
+# OS-specific files
+.DS_Store
+
+# Environment files
+.env
+.env.local
+
+# IDE files
+.vscode/
+.idea/
