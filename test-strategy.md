@@ -38,10 +38,12 @@ Note that not all transformation types need to be exhaustively tested - prioriti
 - **API Tests:** Ensure backend endpoints are stable. Does not have to be extensive, more of a smoke test as a minimum initially. After that, move on to more tests that are hard to do via the UI (e.g. try to access another user's projects, negative tests for unusual requests/responses, mock responses, etc.)
 - **Data Validation Script:** Automate checks for data correctness after ingestion and transformation.
 - **Core AI Model Prompts:** This is a lower priority and would be done after the above have sufficient coverage. Rationale is that the AI is an assistant and is optional - however the user needs to always be able to manually create workflows (and that functionality is also needed for AI to also be able to do it).
+- **Historical Defects In Production:** An excellent way to prioritise what to create E2E test scenarios for is to look at the incidents that have already occurred and create tests that can ensure they don't occur again. 
+- **Heavily Used Features:** Another factor is to consider the features that are more heavily used in production and ensure there is sufficient test coverage. The consideration here is that if a feature is heavily used, then likely an issue with it will cause disruption for a lot of users.
 
 ### What Not to Automate Yet
 - **UI Testing for Third Party Integrations:** Testing AWS, Azure and Google buckets receive the files is a very low priority for UI automation. Testing is mainly the responsibility for the third parties, however monitors should be placed in production for errors (e.g. logs).
-- **Currently Unused Features:** If any features are not used or unavailable, there is no need to automate them unless a production release is planned soon.
+- **Currently Unused Features:** If any features are not used or unavailable or just are not used much by customers, then there is less need to automate them unless a production release to improve that feature is planned soon.
 - **All Other AI Capabilities:** AI functionality is a lower priority to exhaustively test and the focus should be on key AI prompts and support functions. Tests for the AI feature will be more brittle than tests for other features.
 
 ---

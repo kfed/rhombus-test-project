@@ -6,14 +6,11 @@ playwright-report/
 test-results/
 blob-report/
 reports/
+downloads/
 
 # Playwright cache and auth
 playwright/.cache/
 playwright/.auth/
-
-# Build artifacts (TypeScript)
-dist/
-out/
 
 # Logs
 *.log
