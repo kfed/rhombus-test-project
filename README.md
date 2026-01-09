@@ -46,13 +46,14 @@ rhombus-test-project/
 
 ## Test Data
 
-- Credentials and csv files are stored in `fixtures/user.json`.
+- Credentials and csv files are stored in `fixtures/user`.
+- Downloaded files during UI test execution are stored in `downloads/`.
 
 ## Adding Tests
 
 - Add new UI test files in the `ui-tests/` directory.
-- Add new API test files in the 'api-tests/' diretory.
-- Add new data validation test files in the 'data-validation/' diretory.
+- Add new API test files in the `api-tests/` diretory.
+- Add new data validation test files in the `data-validation/` diretory.
 - Use the Page Object Model in `pages/` for maintainability of UI tests.
 
 
@@ -61,6 +62,7 @@ rhombus-test-project/
 - Ensure you have:
 1. Cloned the project completely from https://github.com/kfed/rhombus-test-project.git
 2. Run the setup command in step 1 above ("npm run setup"). Simply run it in your terminal in the parent directory of the cloned project.
+3. To run a successful data validation script, downloaded test files must exist. These files are created by running a successful UI test automation run (i.e. npm run test)
 
 ---
 
