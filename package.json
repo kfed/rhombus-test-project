@@ -1,12 +1,14 @@
 {
   "name": "rhombus-test-project",
   "version": "1.0.0",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "setup": "npm install @playwright/test && npm install && npx playwright install chromium",
     "test": "npx playwright test",
     "test:headed": "npx playwright test --headed",
     "test:debug": "npx playwright test --debug",
+    "data-validate": "node data-validation/validate-transformations.js",
     "report": "npx playwright show-report"
   },
   "keywords": [],

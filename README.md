@@ -24,14 +24,19 @@ rhombus-test-project/
 
 ## Running Tests
 
-- **Run all tests:**
+- **Run UI tests in headless mode:**
   ```bash
   npm run test
   ```
 
-- **Run tests in headed mode:**
+- **Run UI tests in headed mode:**
   ```bash
   npm run test:headed
+  ```
+
+- **Run Data Validation tests:**
+  ```bash
+  node datav-validation/validate-transformations.js
   ```
 
 - **View HTML report:**
