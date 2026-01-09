@@ -22,6 +22,15 @@ function checkFileExists(filePath) {
   }
 }
 
+function removeDuplicatesByName(rows) {
+  const seen = new Set();
+  return rows.filter(row => {
+    if (seen.has(row.Name)) return false;
+    seen.add(row.Name);
+    return true;
+  });
+}
+
 const messyPath = path.resolve('test-data/messy.csv');
 const dropFoobarPath = path.resolve('downloads/messy_drop_foobar.csv');
 const removedDupesPath = path.resolve('downloads/messy_removed_duplicates_name.csv');
@@ -35,30 +44,28 @@ const dropFoobarText = fs.readFileSync(dropFoobarPath, 'utf-8');
 const removedDupesText = fs.readFileSync(removedDupesPath, 'utf-8');
 
 
-// 1.1 Drop Transformation - Validate Foobar column removed and column count correct
+// 1. Drop Column Transformation
 const messyHeaders = getHeaders(messyText);
 const dropFoobarHeaders = getHeaders(dropFoobarText);
 if (dropFoobarHeaders.includes('Foobar')) {
-  console.error('❌ 1.1a Foobar column was NOT removed in messy_drop_foobar.csv');
+  console.error('❌ 1.1 Foobar column was NOT removed in messy_drop_foobar.csv');
   process.exit(1);
 }
+console.log('✅ 1.1 Foobar column removed in messy_drop_foobar.csv');
+
 if (dropFoobarHeaders.length !== messyHeaders.length - 1) {
-  console.error('❌ 1.1b Column count mismatch after dropping Foobar');
+  console.error('❌ 1.2 Column count mismatch after dropping Foobar');
   process.exit(1);
 }
-console.log('✅ 1.1 Foobar column removed and column count is correct in messy_drop_foobar.csv');
+console.log('✅ 1.2 Column count is correct in messy_drop_foobar.csv');
 
-
-// 1.2 Drop Transformation - Compare column headers to original csv (schema check)
 const expectedDropFoobarHeaders = messyHeaders.filter(h => h !== 'Foobar');
 if (JSON.stringify(dropFoobarHeaders) !== JSON.stringify(expectedDropFoobarHeaders)) {
-  console.error('❌ 1.2 Output schema does not match expected after dropping Foobar');
+  console.error('❌ 1.3 Output schema does not match expected after dropping Foobar');
   process.exit(1);
 }
-console.log('✅ 1.2 Output schema matches expected after dropping Foobar');
+console.log('✅ 1.3 Output schema matches expected after dropping Foobar');
 
-
-// 1.3 Drop Transformation - Validate row count and data match except for Foobar column
 const messyRows = parseCSV(messyText).map(row => {
   const { Foobar, ...rest } = row;
   return rest;
@@ -66,31 +73,32 @@ const messyRows = parseCSV(messyText).map(row => {
 const dropFoobarRows = parseCSV(dropFoobarText);
 
 if (dropFoobarRows.length !== messyRows.length) {
-  console.error('❌ 1.3a Row count mismatch after dropping Foobar');
+  console.error('❌ 1.4 Row count mismatch after dropping Foobar');
   process.exit(1);
 }
+console.log('✅ 1.4 Row count matches after dropping Foobar column');
+
 if (JSON.stringify(messyRows) !== JSON.stringify(dropFoobarRows)) {
-  console.error('❌ 1.3b Row data mismatch after dropping Foobar column');
+  console.error('❌ 1.5 Row data mismatch after dropping Foobar column');
   process.exit(1);
 }
-console.log('✅ 1.3 Row count and data matches after dropping Foobar column');
+console.log('✅ 1.5 Row data matches after dropping Foobar column');
 
 
-// 2.1 Duplicates Removed - Validate duplicates removed by Name and Foobar still gone
+// 2. Duplicates Removed Transformation
 const removedDupesHeaders = getHeaders(removedDupesText);
 if (removedDupesHeaders.includes('Foobar')) {
-  console.error('❌ 2.1a Foobar column present in messy_removed_duplicates_name.csv');
+  console.error('❌ 2.1 Foobar column present in messy_removed_duplicates_name.csv');
   process.exit(1);
 }
+console.log('✅ 2.1 Foobar column removed in messy_removed_duplicates_name.csv');
 if (removedDupesHeaders.length !== messyHeaders.length - 1) {
-  console.error('❌ 2.1b Column count mismatch after dropping Foobar');
+  console.error('❌ 2.2 Column count mismatch after dropping Foobar');
   process.exit(1);
 }
 const removedDupesRows = parseCSV(removedDupesText);
-console.log('✅ 2.1 Column count matches after dropping Foobar');
+console.log('✅ 2.2 Column count matches after dropping Foobar');
 
-
-// 2.2 Duplicates Removed - Check for duplicate names
 const seenNames = new Set();
 let hasDuplicates = false;
 for (const row of removedDupesRows) {
@@ -101,38 +109,23 @@ for (const row of removedDupesRows) {
   seenNames.add(row.Name);
 }
 if (hasDuplicates) {
-  console.error('❌ 2.2 Duplicate names found in messy_removed_duplicates_name.csv');
+  console.error('❌ 2.3 Duplicate names found in messy_removed_duplicates_name.csv');
   process.exit(1);
 }
-console.log('✅ 2.2 Duplicate names removed in messy_removed_duplicates_name.csv');
+console.log('✅ 2.3 Duplicate names removed in messy_removed_duplicates_name.csv');
 
-
-// 2.3 Duplicates Removed - After removing duplicates by Name
 const uniqueNames = new Set(messyRows.map(row => row.Name));
 if (removedDupesRows.length !== uniqueNames.size) {
-  console.error('❌ 2.3 Row count mismatch after removing duplicates by Name');
+  console.error('❌ 2.4 Row count mismatch after removing duplicates by Name');
   process.exit(1);
 }
-console.log('✅ 2.3 Row count matches after removing duplicates by Name');
+console.log('✅ 2.4 Row count matches after removing duplicates by Name');
 
-// 2.4: Validate row data matches expected after removing duplicates by Name
-function removeDuplicatesByName(rows) {
-  const seen = new Set();
-  return rows.filter(row => {
-    if (seen.has(row.Name)) return false;
-    seen.add(row.Name);
-    return true;
-  });
-}
-
-// Build expected rows: drop Foobar, then remove duplicates by Name
 const expectedRemovedDupesRows = removeDuplicatesByName(messyRows);
-
-// Compare actual to expected
 if (JSON.stringify(removedDupesRows) !== JSON.stringify(expectedRemovedDupesRows)) {
-  console.error('❌ 2.4 Row data mismatch after removing duplicates by Name');
+  console.error('❌ 2.5 Row data mismatch after removing duplicates by Name');
   process.exit(1);
 }
-console.log('✅ 2.4 Row data matches after dropping Foobar and removing duplicates by Name');
+console.log('✅ 2.5 Row data matches after dropping Foobar and removing duplicates by Name');
 
 console.log('All validations passed!');
