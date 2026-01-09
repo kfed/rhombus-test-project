@@ -1,7 +1,4 @@
 class LoginPage {
-  /**
-   * @param {import('@playwright/test').Page} page
-   */
   constructor(page) {
     this.page = page;
     this.loginButton = 'button:has-text("Log In")';
@@ -26,4 +23,4 @@ class LoginPage {
   }
 }
 
-module.exports = { LoginPage };
+export { LoginPage };

@@ -1,7 +1,4 @@
 class MainPage {
-  /**
-   * @param {import('@playwright/test').Page} page
-   */
   constructor(page) {
     this.page = page;
     
@@ -105,5 +102,4 @@ class MainPage {
   }
 }
 
-
-module.exports = { MainPage };
+export { MainPage };

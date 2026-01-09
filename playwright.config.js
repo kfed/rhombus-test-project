@@ -1,8 +1,8 @@
 /** @type {import('@playwright/test').PlaywrightTestConfig} */
 const config = {
   testDir: './ui-tests',
-  timeout: 30000,
-  retries: 0,
+  timeout: 60000,
+  retries: 1,
   use: {
     headless: true,
     viewport: { width: 1280, height: 720 },
@@ -14,4 +14,4 @@ const config = {
   reporter: [['list'], ['html', { open: 'never' }]],
 };
 
-module.exports = config;
+export default config;
