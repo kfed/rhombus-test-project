@@ -66,26 +66,28 @@ const messyRows = parseCSV(messyText).map(row => {
 const dropFoobarRows = parseCSV(dropFoobarText);
 
 if (dropFoobarRows.length !== messyRows.length) {
-  console.error('❌ 1.3b Row count mismatch after dropping Foobar');
+  console.error('❌ 1.3a Row count mismatch after dropping Foobar');
   process.exit(1);
 }
-console.log('✅ 1.3a Row count matches after dropping Foobar column');
-
 if (JSON.stringify(messyRows) !== JSON.stringify(dropFoobarRows)) {
-  console.error('❌ 1.3a Row data mismatch after dropping Foobar column');
+  console.error('❌ 1.3b Row data mismatch after dropping Foobar column');
   process.exit(1);
 }
-console.log('✅ 1.3b Row data matches after dropping Foobar column');
+console.log('✅ 1.3 Row count and data matches after dropping Foobar column');
 
 
 // 2.1 Duplicates Removed - Validate duplicates removed by Name and Foobar still gone
 const removedDupesHeaders = getHeaders(removedDupesText);
 if (removedDupesHeaders.includes('Foobar')) {
-  console.error('❌ 2.1 Foobar column present in messy_removed_duplicates_name.csv');
+  console.error('❌ 2.1a Foobar column present in messy_removed_duplicates_name.csv');
+  process.exit(1);
+}
+if (removedDupesHeaders.length !== messyHeaders.length - 1) {
+  console.error('❌ 2.1b Column count mismatch after dropping Foobar');
   process.exit(1);
 }
 const removedDupesRows = parseCSV(removedDupesText);
-console.log('✅ 2.1 Foobar column not present in messy_removed_duplicates_name.csv');
+console.log('✅ 2.1 Column count matches after dropping Foobar');
 
 
 // 2.2 Duplicates Removed - Check for duplicate names
@@ -112,4 +114,25 @@ if (removedDupesRows.length !== uniqueNames.size) {
   process.exit(1);
 }
 console.log('✅ 2.3 Row count matches after removing duplicates by Name');
+
+// 2.4: Validate row data matches expected after removing duplicates by Name
+function removeDuplicatesByName(rows) {
+  const seen = new Set();
+  return rows.filter(row => {
+    if (seen.has(row.Name)) return false;
+    seen.add(row.Name);
+    return true;
+  });
+}
+
+// Build expected rows: drop Foobar, then remove duplicates by Name
+const expectedRemovedDupesRows = removeDuplicatesByName(messyRows);
+
+// Compare actual to expected
+if (JSON.stringify(removedDupesRows) !== JSON.stringify(expectedRemovedDupesRows)) {
+  console.error('❌ 2.4 Row data mismatch after removing duplicates by Name');
+  process.exit(1);
+}
+console.log('✅ 2.4 Row data matches after dropping Foobar and removing duplicates by Name');
+
 console.log('All validations passed!');
