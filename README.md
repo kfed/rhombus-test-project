@@ -13,7 +13,7 @@ rhombus-test-project/
 ├── test-data/         # Test data (e.g., user.json)
 ├── ui-tests/          # UI Test files
 ├── utils/             # Helper functions
-├── .env               # Username and password values
+├── .env               # Stores username and password values
 ├── .gitignore
 ├── package.lock.json
 ├── package.json
@@ -24,10 +24,22 @@ rhombus-test-project/
 
 ## Setup
 
-1. **Install dependencies amd Playwright Chromium browser:**
-   ```bash
-   npm run setup
-   ```
+  1. **Install dependencies amd Playwright Chromium browser:**
+    ```bash
+    npm run setup
+    ```
+
+  2. **Setup .env variable** 
+    2.1 Copy the example file:
+    ```bash
+    cp .env.example .env
+    ```
+    2.2 Edit `.env` and fill in your real credentials.
+
+  3. **Prevent git tracking changes to the session token file**
+    ```bash
+    git update-index --assume-unchanged test-data/session_cookie.txt
+    ```
 
 ## Running Tests
 
@@ -46,7 +58,7 @@ rhombus-test-project/
   npm run test:get-session-token
   ```
 
-- **Run API tests (make sure a valid unexpired session token exists in the test-data folder):**
+- **Run API tests (ensure a session token exists - if not, run the step above):**
   ```bash
   npm run test:api
   ```
@@ -69,14 +81,7 @@ rhombus-test-project/
 
 ## Environment Variables
 
-This project uses environment variables for sensitive data (such as login credentials). Do not commit your real `.env` file to git.
-
-1. Copy the example file:
-   ```bash
-   cp .env.example .env
-   ```
-2. Edit `.env` and fill in your real credentials.
-
+This project uses environment variables for sensitive data (such as login credentials). Do not commit your real `.env` file to git. Instructions are in the setup section above.
 **Never commit your real `.env` file. Only share `.env.example`!**
 
 ## Prevent git tracking changes to the session token file (run this once after cloneing):
