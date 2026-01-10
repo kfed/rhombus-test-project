@@ -7,6 +7,7 @@ test-results/
 blob-report/
 reports/
 downloads/
+test-data/session_cookie.txt
 
 # Playwright cache and auth
 playwright/.cache/
