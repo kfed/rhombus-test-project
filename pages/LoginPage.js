@@ -1,3 +1,5 @@
+import { BASE_URL } from '../utils/config.js';
+
 class LoginPage {
   constructor(page) {
     this.page = page;
@@ -8,7 +10,7 @@ class LoginPage {
   }
 
   async goto() {
-    await this.page.goto('https://rhombusai.com/');
+    await this.page.goto('${BASE_URL}');
   }
 
   async clickLogin() {

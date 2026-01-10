@@ -6,13 +6,19 @@ This project contains automated Playwright tests for the Rhombus AI web applicat
 
 ```
 rhombus-test-project/
-├── ui-tests/      # UI Test files
-├── pages/         # Page Object Model files
-├── fixtures/      # Test data (e.g., user.json)
-├── utils/         # Helper functions
-├── playwright.config.js
+├── api-tests/         # API tests
+├── data-validation/   # Helper functions
+├── downloads/         # Stores csv files downloaded during automated UI test execution
+├── pages/             # Page Object Model files
+├── test-data/         # Test data (e.g., user.json)
+├── ui-tests/          # UI Test files
+├── utils/             # Helper functions
+├── .gitignore
+├── package.lock.json
 ├── package.json
-└── README.md
+├── playwright.config.js
+├── README.md
+└── test-strategy.json
 ```
 
 ## Setup
@@ -26,12 +32,22 @@ rhombus-test-project/
 
 - **Run UI tests in headless mode:**
   ```bash
-  npm run test
+  npm run test:ui
   ```
 
 - **Run UI tests in headed mode:**
   ```bash
-  npm run test:headed
+  npm run test:ui-headed
+  ```
+
+- **Run this test to get the login session token to be used for api testing**
+  ```bash
+  npm run test:get-session-token
+  ```
+
+- **Run API tests (make sure a valid unexpired session token exists in the test-data folder):**
+  ```bash
+  npm run test:api
   ```
 
 - **Run Data Validation tests:**
@@ -39,15 +55,15 @@ rhombus-test-project/
   node datav-validation/validate-transformations.js
   ```
 
-- **View HTML report:**
+- **Run this to view a HTML report generated after a test run:**
   ```bash
   npm run report
   ```
 
 ## Test Data
 
-- Credentials and csv files are stored in `fixtures/user`.
-- Downloaded files during UI test execution are stored in `downloads/`.
+- Credentials and csv files are stored in `test-data/user`.
+- Downloaded csv files during UI test execution are stored in `downloads/`.
 
 ## Adding Tests
 
@@ -55,7 +71,6 @@ rhombus-test-project/
 - Add new API test files in the `api-tests/` diretory.
 - Add new data validation test files in the `data-validation/` diretory.
 - Use the Page Object Model in `pages/` for maintainability of UI tests.
-
 
 ## Troubleshooting
 
