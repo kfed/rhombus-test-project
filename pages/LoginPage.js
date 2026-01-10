@@ -10,14 +10,14 @@ class LoginPage {
   }
 
   async goto() {
-    await this.page.goto('${BASE_URL}');
+    await this.page.goto(`${BASE_URL}`);
   }
 
   async clickLogin() {
     await this.page.click(this.loginButton);
   }
 
-  async login(username, password) {
+  async login(username = process.env.RHOMBUS_USERNAME, password = process.env.RHOMBUS_PASSWORD) {
     await this.clickLogin();
     await this.page.fill(this.emailInput, username);
     await this.page.fill(this.passwordInput, password);

@@ -13,6 +13,7 @@ rhombus-test-project/
 ├── test-data/         # Test data (e.g., user.json)
 ├── ui-tests/          # UI Test files
 ├── utils/             # Helper functions
+├── .env               # Username and password values
 ├── .gitignore
 ├── package.lock.json
 ├── package.json
@@ -64,6 +65,18 @@ rhombus-test-project/
 
 - Credentials and csv files are stored in `test-data/user`.
 - Downloaded csv files during UI test execution are stored in `downloads/`.
+
+## Environment Variables
+
+This project uses environment variables for sensitive data (such as login credentials). Do not commit your real `.env` file to git.
+
+1. Copy the example file:
+   ```bash
+   cp .env.example .env
+   ```
+2. Edit `.env` and fill in your real credentials.
+
+**Never commit your real `.env` file. Only share `.env.example`!**
 
 ## Adding Tests
 

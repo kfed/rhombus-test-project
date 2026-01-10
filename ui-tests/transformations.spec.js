@@ -1,10 +1,13 @@
+import 'dotenv/config';
 import { test, expect } from '@playwright/test';
 import fs from 'fs';
 import path from 'path';
-import user from '../test-data/user.json' assert { type: 'json' };
 import { LoginPage } from '../pages/LoginPage.js';
 import { MainPage } from '../pages/MainPage.js';
 import { fileURLToPath } from 'url';
+
+const USERNAME = process.env.RHOMBUS_USERNAME;
+const PASSWORD = process.env.RHOMBUS_PASSWORD;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -32,7 +35,7 @@ test('Manual Transformation Flow', async ({ page }) => {
   const columnToCheckForDuplicates = 'name';
   
   await loginPage.goto();
-  await loginPage.login(user.username, user.password);
+  await loginPage.login(USERNAME, PASSWORD);
   await mainPage.deleteAnyExistingProjects();
   await mainPage.createNewProject(projectName);
   await mainPage.waitForAndCloseToast('Project created successfully');
