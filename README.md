@@ -63,7 +63,8 @@ rhombus-test-project/
 
 ## Test Data
 
-- Credentials and csv files are stored in `test-data/user`.
+- Credentials are sensitive for a live system, so manually enter these in the .env file
+- Csv input files for tests are stored in `test-data/user`.
 - Downloaded csv files during UI test execution are stored in `downloads/`.
 
 ## Environment Variables
@@ -77,6 +78,11 @@ This project uses environment variables for sensitive data (such as login creden
 2. Edit `.env` and fill in your real credentials.
 
 **Never commit your real `.env` file. Only share `.env.example`!**
+
+## Prevent git tracking changes to the session token file (run this once after cloneing):
+   ```bash
+   git update-index --assume-unchanged test-data/session_cookie.txt
+   ```
 
 ## Adding Tests
 
