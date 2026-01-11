@@ -38,11 +38,11 @@ rhombus-test-project/
 
 2. **Setup .env variable:**
 
-    Copy the example file and edit to fill in real credentials
+  Copy the example file and edit to fill in real credentials
 
-        ```bash
-        cp .env.example .env
-        ```
+    ```bash
+    cp .env.example .env
+    ```
 
 3. **Prevent git tracking changes to the session token file:**
 
