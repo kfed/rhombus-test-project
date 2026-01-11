@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { parseCSV, getHeaders, checkFileExists, removeDuplicatesByName } from '../utils/csvUtils.js';
+import { parseCSV, getHeaders, checkFileExists, removeDuplicatesByName } from '../utils/utils.js';
 
 const messyPath = path.resolve('test-data/messy.csv');
 const dropFoobarPath = path.resolve('downloads/messy_drop_foobar.csv');
