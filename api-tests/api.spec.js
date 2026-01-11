@@ -7,6 +7,7 @@ import { BASE_URL } from '../utils/config.js';
 import { BASE_API_URL } from '../utils/config.js';
 import { SESSION_COOKIE_PATH } from '../utils/config.js';
 import { getAccessToken, createProject, uploadFile } from '../utils/api-helpers.js';
+import { uniqueProjectName } from '../utils/utils.js';
 
 const USERNAME = process.env.RHOMBUS_USERNAME;
 const SESSION_COOKIE = fs.readFileSync(SESSION_COOKIE_PATH, 'utf-8').trim();
@@ -90,7 +91,7 @@ test.describe('API Tests', () => {
 
     // API - Create Project and Upload File Test
     test('should create a new project via API and upload a valid file', async ({ request }) => {
-      const projectName = `Test Project ${Date.now()}`;
+      const projectName = uniqueProjectName('Test Project via API');
       const projectDescription = 'This is a test project created via API';
       const filename = "messy.csv";
       const description = 'This is a messy but valid CSV file';
@@ -121,7 +122,7 @@ test.describe('API Tests', () => {
       const projectDescription = 'This is a new project that will be attempted to create twice';
       const accessToken = await getAccessToken(request, BASE_URL, SESSION_COOKIE);
       const projectPayload = {
-        name: `Test Project ${Date.now()}`,
+        name: uniqueProjectName('Test Project via API'),
         description: projectDescription,
         has_samples: false
       };
