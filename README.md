@@ -2,6 +2,11 @@
 
 This project contains automated Playwright tests for the Rhombus AI web application.
 
+# Walthrough Video Link
+```
+https://storage.googleapis.com/rhombus-ai-video/rhombus_video_waltkthrough.mov
+```
+
 ## Project Structure
 
 ```
@@ -25,19 +30,24 @@ rhombus-test-project/
 
 ## Setup
 
-  1. **Install dependencies amd Playwright Chromium browser:**
+1. **Install dependencies and Playwright Chromium browser:**
+
     ```bash
     npm run setup
     ```
 
-  2. **Setup .env variable** 
-    2.1 Copy the example file:
-    ```bash
-    cp .env.example .env
-    ```
-    2.2 Edit `.env` and fill in your real credentials.
+2. **Setup .env variable:**
 
-  3. **Prevent git tracking changes to the session token file**
+    a. Copy the example file:
+
+        ```bash
+        cp .env.example .env
+        ```
+
+    b. Edit [.env](http://_vscodecontentref_/1) and fill in your real credentials.
+
+3. **Prevent git tracking changes to the session token file:**
+
     ```bash
     git update-index --assume-unchanged test-data/session_cookie.txt
     ```
