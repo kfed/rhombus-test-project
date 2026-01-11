@@ -1,12 +1,14 @@
 import { BASE_URL } from '../utils/config.js';
 
 class LoginPage {
+  static selectors = {
+    loginButton: 'button:has-text("Log In")',
+    emailInput: 'input[name="username"]',
+    passwordInput: 'input[name="password"]',
+    submitButton: 'button[type="submit"]',
+  };
   constructor(page) {
     this.page = page;
-    this.loginButton = 'button:has-text("Log In")';
-    this.emailInput = 'input[name="username"]';
-    this.passwordInput = 'input[name="password"]';
-    this.submitButton = 'button[type="submit"]';
   }
 
   async goto() {
@@ -14,14 +16,14 @@ class LoginPage {
   }
 
   async clickLogin() {
-    await this.page.click(this.loginButton);
+    await this.page.click(LoginPage.selectors.loginButton);
   }
 
   async login(username = process.env.RHOMBUS_USERNAME, password = process.env.RHOMBUS_PASSWORD) {
     await this.clickLogin();
-    await this.page.fill(this.emailInput, username);
-    await this.page.fill(this.passwordInput, password);
-    await this.page.click(this.submitButton);
+    await this.page.fill(LoginPage.selectors.emailInput, username);
+    await this.page.fill(LoginPage.selectors.passwordInput, password);
+    await this.page.click(LoginPage.selectors.submitButton);
   }
 }
 
