@@ -111,7 +111,7 @@ This project uses environment variables for sensitive data (such as login creden
 
 ## Troubleshooting
 
-- Ensure you have:
+Ensure you have:
 1. Cloned the project completely from https://github.com/kfed/rhombus-test-project.git
 2. Run the setup command in step 1 above ("npm run setup"). Simply run it in your terminal in the parent directory of the cloned project.
 3. To run a successful data validation script, downloaded test files must exist. These files are created by running a successful UI test automation run (i.e. npm run test)
