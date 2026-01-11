@@ -42,18 +42,18 @@ test.describe('API Tests', () => {
     }
 
     // API - Get User Profile Info Test (Authorised)
-    test('should get user profile info with session cookie', async ({ request }) => {
-      const response = await request.get(`${BASE_URL}/api/auth/session`, {
+   test('should return 200 and get user profile info using session cookie', async ({ request }) => {
+      const accessToken = await getAccessToken(request, BASE_URL, SESSION_COOKIE);
+      const response = await request.get(`${BASE_API_URL}/accounts/users/profile`, {
         headers: {
-          Cookie: SESSION_COOKIE
+          Authorization: `Bearer ${accessToken}`
         }
       });
+      console.log('Response Status:', response.status());
       expect(response.status()).toBe(200);
       const body = await response.json();
-      expect(body).toHaveProperty('user');
-      expect(body.user).toHaveProperty('email', USERNAME);
-      expect(body).toHaveProperty('accessToken');
-      expect(body).toHaveProperty('expires');
+      expect(body).toHaveProperty('first_name');
+      expect(body).toHaveProperty('last_name');
     });
 
     // API - Get Session Info Test (Authorised)
@@ -73,20 +73,6 @@ test.describe('API Tests', () => {
       expect(body).toHaveProperty('accessToken');
       expect(body).toHaveProperty('isNewUser');
       expect(body).toHaveProperty('tutorialProjectId');
-    });
-
-    // API - Get User Profile Info Test
-    test('should return 200 as authorised to get user profile info', async ({ request }) => {
-      const accessToken = await getAccessToken(request, BASE_URL, SESSION_COOKIE);const response = await request.get(`${BASE_API_URL}/accounts/users/profile`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      });
-      console.log('Response Status:', response.status());
-      expect(response.status()).toBe(200);
-      const body = await response.json();
-      expect(body).toHaveProperty('first_name');
-      expect(body).toHaveProperty('last_name');
     });
 
     // API - Create Project and Upload File Test
