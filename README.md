@@ -92,7 +92,7 @@ rhombus-test-project/
 This project uses environment variables for sensitive data (such as login credentials). Do not commit your real `.env` file to git. Instructions are in the setup section above.
 **Never commit your real `.env` file. Only share `.env.example`!**
 
-## Prevent git tracking changes to the session token file (run this once after cloneing):
+ Prevent git tracking changes to the session token file (run this once after cloning):
    ```bash
    git update-index --assume-unchanged test-data/session_cookie.txt
    ```
