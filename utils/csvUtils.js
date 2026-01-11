@@ -32,3 +32,15 @@ export function removeDuplicatesByName(rows) {
     return true;
   });
 }
+
+// checks if files exists and deletes them
+export function deleteIfExists(filePath) {
+  if (fs.existsSync(filePath)) {
+    fs.unlinkSync(filePath);
+  }
+}
+
+// Helper for unique project names
+export function uniqueProjectName(base) {
+  return `${base}_${Date.now()}`;
+}
