@@ -5,7 +5,7 @@ import path from 'path';
 import { LoginPage } from '../pages/LoginPage.js';
 import { MainPage } from '../pages/MainPage.js';
 import { fileURLToPath } from 'url';
-import { deleteIfExists, uniqueProjectName } from '../utils/csvUtils.js';
+import { deleteIfExists, uniqueProjectName } from '../utils/utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
