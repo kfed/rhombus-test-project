@@ -38,13 +38,11 @@ rhombus-test-project/
 
 2. **Setup .env variable:**
 
-    a. Copy the example file:
+    Copy the example file and edit to fill in real credentials
 
         ```bash
         cp .env.example .env
         ```
-
-    b. Edit [.env](http://_vscodecontentref_/1) and fill in your real credentials.
 
 3. **Prevent git tracking changes to the session token file:**
 
