@@ -28,8 +28,7 @@ test('Manual Transformation Flow', async ({ page }, testInfo) => {
   const columnToCheckForDuplicates = 'name';
 
   await test.step('Login and create new project', async () => {
-    await loginPage.goto();
-    await loginPage.login();
+    await loginPage.loginAndGotoMain();
     await mainPage.deleteAnyExistingProjects();
     await mainPage.createNewProject(projectName);
     await mainPage.waitForAndCloseToast('Project created successfully');
