@@ -6,6 +6,7 @@ class LoginPage {
     emailInput: 'input[name="username"]',
     passwordInput: 'input[name="password"]',
     submitButton: 'button[type="submit"]',
+    dashboardOption: 'span:has-text("Dashboard")',
   };
   constructor(page) {
     this.page = page;
@@ -24,6 +25,12 @@ class LoginPage {
     await this.page.fill(LoginPage.selectors.emailInput, username);
     await this.page.fill(LoginPage.selectors.passwordInput, password);
     await this.page.click(LoginPage.selectors.submitButton);
+  }
+
+  async loginAndGotoMain(username = process.env.RHOMBUS_USERNAME, password = process.env.RHOMBUS_PASSWORD) {
+    await this.goto();
+    await this.login(username, password);
+    await this.page.waitForSelector(LoginPage.selectors.dashboardOption, { timeout: 10000 });
   }
 }
 
