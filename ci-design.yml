@@ -1,0 +1,32 @@
+name: CI Pipeline
+
+on:
+  pull_request:
+    branches: [main, develop]
+  schedule:
+    - cron: '0 2 * * *' # Nightly at 2am
+  release:
+    types: [prereleased]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - checkout code
+      - setup Node.js
+      - install dependencies
+      - run smoke tests on PR:
+          if: github.event_name == 'pull_request'
+          run: npx playwright test --grep @smoke
+      - run regression tests nightly:
+          if: github.event_name == 'schedule'
+          run: npx playwright test --grep @regression
+      - run full suite pre-release:
+          if: github.event_name == 'release'
+          run: npx playwright test
+      - collect artifacts:
+          run: |
+            cp playwright-report/* $ARTIFACTS_DIR
+            cp test-results/* $ARTIFACTS_DIR
+      - upload artifacts
+    # Block merges/releases on failures as described above
