@@ -10,7 +10,7 @@
     "test:ui-debug": "npx playwright test ui-tests/transformations.spec.js --debug",
     "test:get-session-token": "npx playwright test ui-tests/get-login-session-token.spec.js",
     "test:api": "npx playwright test api-tests/",
-    "data-validate": "node data-validation/validate-transformations.js",
+    "test:data-validate": "node data-validation/validate-transformations.js",
     "report": "npx playwright show-report"
   },
   "keywords": [],

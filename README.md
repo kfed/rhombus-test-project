@@ -66,7 +66,7 @@ rhombus-test-project/
 
 - **Run Data Validation tests:**
   ```bash
-  node datav-validation/validate-transformations.js
+  npm run test:data-validate
   ```
 
 - **Run this to view a HTML report generated after a test run:**
