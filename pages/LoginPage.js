@@ -12,23 +12,15 @@ class LoginPage {
     this.page = page;
   }
 
-  async goto() {
-    await this.page.goto(`${BASE_URL}`);
-  }
-
-  async clickLogin() {
-    await this.page.click(LoginPage.selectors.loginButton);
-  }
-
   async login(username = process.env.RHOMBUS_USERNAME, password = process.env.RHOMBUS_PASSWORD) {
-    await this.clickLogin();
+    await this.page.click(LoginPage.selectors.loginButton);
     await this.page.fill(LoginPage.selectors.emailInput, username);
     await this.page.fill(LoginPage.selectors.passwordInput, password);
     await this.page.click(LoginPage.selectors.submitButton);
   }
 
   async loginAndGotoMain(username = process.env.RHOMBUS_USERNAME, password = process.env.RHOMBUS_PASSWORD) {
-    await this.goto();
+    await this.page.goto(`${BASE_URL}`);
     await this.login(username, password);
     await this.page.waitForSelector(LoginPage.selectors.dashboardOption, { timeout: 10000 });
   }
