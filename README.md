@@ -15,6 +15,7 @@ rhombus-test-project/
 ├── utils/             # Helper functions
 ├── .env               # Stores username and password values
 ├── .gitignore
+├── ci-design.yml
 ├── package.lock.json
 ├── package.json
 ├── playwright.config.js
