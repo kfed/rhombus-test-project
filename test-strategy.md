@@ -84,7 +84,7 @@ Note that not all transformation types need to be exhaustively tested - prioriti
 - **Goal:** Run tests in an ad-hoc manner prior to a release. When complete, a report can highlight any issues that need addressing.
 - **Release Blocking:** The release is blocked until each issue is reviewed to ensure its valid and not a one off issue (e.g. server went down for maintenance during the test run). If suspecting an external factor or temporary environment issue, the failed tests can be rerun to confirm. Release should only be unblocked once all tests are confirmed passed.
 
-**Note:** This strategy relies on the total tests to be a manageable set that can be completed in a reasonable timeframe. If time to release is important (i.e. require to do frequent releases, even perhaps multiple releases a day), then this strategy will need to be changed. The above mentioned is best practice, but different organisations have differing requirements and the strategy would need to be amended to meet those requirements.
+**Note:** This strategy relies on the total tests to be a manageable set that can be completed in a reasonable timeframe. If time to release is important (i.e. require to do frequent releases, even perhaps multiple releases a day), then this strategy will need to be changed (e.g. to specific feature-based tests only). The above mentioned is best practice, but different organisations have differing requirements and the strategy would need to be amended to meet those requirements.
 
 ---
 
