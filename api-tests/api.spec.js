@@ -117,8 +117,8 @@ test.describe('API Tests', () => {
       expect(uploadBody).toHaveProperty('content_type', fileType);
     });
 
-    // API - Create Duplicate Named Project Test (negative test)
-    test('should create a new project and then a duplicate request is denied when attempted with the same name', async ({ request }) => {
+    // API - Attempt Duplicate Named Project Test (negative test)
+    test('should create a new project and then be denied to create another duplicate project with the same name', async ({ request }) => {
       const projectDescription = 'This is a new project that will be attempted to create twice';
       const accessToken = await getAccessToken(request, BASE_URL, SESSION_COOKIE);
       const projectPayload = {
@@ -135,6 +135,19 @@ test.describe('API Tests', () => {
 
       const duplicateResponse = await createProject(request, BASE_API_URL, accessToken, projectPayload.name, projectPayload.description, projectPayload.has_samples);
       expect(duplicateResponse.status()).toBe(409);
+    });
+
+    // API - Attempt to upload a file on a project belonging to another user (negative test)
+    test('should attempt to upload a file to a project belonging to another user', async ({ request }) => {
+      const invalidProjectId = '1382'; // belongs to another user
+      const accessToken = await getAccessToken(request, BASE_URL, SESSION_COOKIE);
+      const filePath = validMessyCSVPath;
+      const filename = "messy.csv";
+      const description = 'This is a messy but valid CSV file';
+      const fileType = 'text/csv';
+
+      const uploadResponse = await uploadFile(request, BASE_API_URL, accessToken, invalidProjectId, filePath, filename, description);
+      expect(uploadResponse.status()).toBe(404);
     });
   });
 });
