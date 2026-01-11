@@ -75,11 +75,14 @@ Note that not all transformation types need to be exhaustively tested - prioriti
 Confidence in the system is low from such a check.
 - **Release Blocking:** Any issue here is a release blocker!
 
-### Nightly Runs (also Ad-hoc Runs as needed)
-- **Run:** Full regression suite - all UI, API and Data Validation tests.
-- **Goal:** Run all of the tests after hours so that time is not a factor (or in an ad-hoc manner prior to a release or to confirm an issue with the previous night's run). The next morning, a report can highlight any issues that need addressing.
-- **Release Blocking:** Any issue here is not necessarily a blocker. Each issue would have to be reviewed to ensure its valid and not a one off issue (e.g. server went down for maintenance during the test run). The idea here would be to have these tests regularly returning green results to inspire confidence.
+### Nightly Runs
+- **Run:** Run regression suite - all UI, API and Data Validation tests.
+- **Goal:** Run all of the tests after hours so that time is not a factor. The next morning, a report can highlight any issues that need addressing.
 
+### Pre-release Runs
+- **Run:**  - Run all tests - smoke, new features, UI, API and data validation tests.
+- **Goal:** Run tests in an ad-hoc manner prior to a release. When complete, a report can highlight any issues that need addressing.
+- **Release Blocking:** Any issue here is not necessarily a blocker. Each issue would have to be reviewed to ensure its valid and not a one off issue (e.g. server went down for maintenance during the test run). If suspect an external factor or temporary environment issue, the failed tests can be rerun to confirm.
 ---
 
 ## 5. Testing AI-Driven Behavior
