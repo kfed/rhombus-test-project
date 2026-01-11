@@ -5,9 +5,7 @@ import path from 'path';
 import { LoginPage } from '../pages/LoginPage.js';
 import { MainPage } from '../pages/MainPage.js';
 import { fileURLToPath } from 'url';
-
-const USERNAME = process.env.RHOMBUS_USERNAME;
-const PASSWORD = process.env.RHOMBUS_PASSWORD;
+import { deleteIfExists, uniqueProjectName } from '../utils/csvUtils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,43 +16,46 @@ const filePathColumnsDropped = path.resolve(__dirname, `../downloads/${fileWithC
 const filePathDuplicatesRemoved = path.resolve(__dirname, `../downloads/${fileWithDuplicatesRemoved}`);
 
 test.beforeAll(() => {
-  // delete any existing transformed output files from previous test runs
-  if (fs.existsSync(filePathColumnsDropped)) {
-    fs.unlinkSync(filePathColumnsDropped); 
-  }
-  if (fs.existsSync(filePathDuplicatesRemoved)) {
-    fs.unlinkSync(filePathDuplicatesRemoved);
-  }
+  deleteIfExists(filePathColumnsDropped);
+  deleteIfExists(filePathDuplicatesRemoved);
 });
 
-test('Manual Transformation Flow', async ({ page }) => {
+test('Manual Transformation Flow', async ({ page }, testInfo) => {
   const loginPage = new LoginPage(page);
   const mainPage = new MainPage(page);
-  const projectName = 'ManualTransFlow01';
+  const projectName = uniqueProjectName('ManualTransFlow');
   const columnToDrop = 'foobar';
   const columnToCheckForDuplicates = 'name';
-  
-  await loginPage.goto();
-  await loginPage.login(USERNAME, PASSWORD);
-  await mainPage.deleteAnyExistingProjects();
-  await mainPage.createNewProject(projectName);
-  await mainPage.waitForAndCloseToast('Project created successfully');
 
-  await mainPage.addNodeDataInput(messyCSVPath);
-  await mainPage.waitForAndCloseToast('Dataset(s) uploaded successfully.');
-  await mainPage.waitForAndCloseToast('Pipeline execution completed successfully');
-  await expect(page.getByTestId('node-input-selected')).toContainText('Data Input');
-  await expect(page.getByTestId('node-input-selected')).toContainText('messy.csv');
+  await test.step('Login and create new project', async () => {
+    await loginPage.goto();
+    await loginPage.login();
+    await mainPage.deleteAnyExistingProjects();
+    await mainPage.createNewProject(projectName);
+    await mainPage.waitForAndCloseToast('Project created successfully');
+  });
 
-  await mainPage.addNodeDropColumns(columnToDrop);
-  await mainPage.waitForAndCloseToast('Pipeline execution completed successfully');
-  await expect(page.locator('span.truncate').filter({ hasText: 'Drop Columns' })).toBeVisible();
-  await mainPage.downloadResults(fileWithColumnDropped);
-  expect(fs.existsSync(filePathColumnsDropped)).toBe(true);
+  await test.step('Upload dataset and verify input node', async () => {
+    await mainPage.addNodeDataInput(messyCSVPath);
+    await mainPage.waitForAndCloseToast('Dataset(s) uploaded successfully.');
+    await mainPage.waitForAndCloseToast('Pipeline execution completed successfully');
+    await expect(page.getByTestId('node-input-selected')).toContainText('Data Input');
+    await expect(page.getByTestId('node-input-selected')).toContainText('messy.csv');
+  });
 
-  await mainPage.addNodeRemoveDuplicates(columnToCheckForDuplicates);
-  await mainPage.waitForAndCloseToast('Pipeline execution completed successfully');
-  await expect(page.locator('span.truncate').filter({ hasText: 'Remove Duplicates' })).toBeVisible();
-  await mainPage.downloadResults(fileWithDuplicatesRemoved);
-  expect(fs.existsSync(filePathDuplicatesRemoved)).toBe(true);  
+  await test.step('Drop column and download result', async () => {
+    await mainPage.addNodeDropColumns(columnToDrop);
+    await mainPage.waitForAndCloseToast('Pipeline execution completed successfully');
+    await expect(page.locator('span.truncate').filter({ hasText: 'Drop Columns' })).toBeVisible();
+    await mainPage.downloadResults(fileWithColumnDropped /*, testInfo.outputPath(fileWithColumnDropped)*/);
+    expect(fs.existsSync(filePathColumnsDropped)).toBe(true);
+  });
+
+  await test.step('Remove duplicates and download result', async () => {
+    await mainPage.addNodeRemoveDuplicates(columnToCheckForDuplicates);
+    await mainPage.waitForAndCloseToast('Pipeline execution completed successfully');
+    await expect(page.locator('span.truncate').filter({ hasText: 'Remove Duplicates' })).toBeVisible();
+    await mainPage.downloadResults(fileWithDuplicatesRemoved /*, testInfo.outputPath(fileWithDuplicatesRemoved)*/);
+    expect(fs.existsSync(filePathDuplicatesRemoved)).toBe(true);
+  });
 });
