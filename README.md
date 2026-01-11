@@ -97,6 +97,11 @@ This project uses environment variables for sensitive data (such as login creden
    git update-index --assume-unchanged test-data/session_cookie.txt
    ```
 
+## What Was Tested/Not Tested
+- UI Automation: I aimed to only the e2e test as was listed in the assessment for the manual transformation flow.
+- Data Validation: I checked both generated output files from the UI test automation flow. I aimed to include scenarios that can each be failed based on different situations. The order was important, as the last test for each was the most comprehensive. It was designed that way so that if an earlier test failed, it would provide more information on the actual problem.
+- API Tests: I covered two items from the list: **Authentication / Session Behaviour**, and **Dataset Upload**. I wasn't sure how much to include as part of Authentication, so i included the visible apis session and profile. For Dataset Upload, I included a specific test for it. It mentioned at least one negative test, so I included two... since the first one i did was the duplciate project name test and I wasn't sure if it fit the two items as it only worked with projects, so I added the second one for trying to upload a file to a different user's project.
+
 ## Adding Tests
 
 - Add new UI test files in the `ui-tests/` directory.
