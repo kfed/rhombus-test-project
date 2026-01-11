@@ -71,18 +71,18 @@ Note that not all transformation types need to be exhaustively tested - prioriti
 
 ### On Every Pull Request
 - **Run:** Fast, critical smoke tests (UI and API) that can run ideally within a minute.
-- **Goal:** Quick initial check to catch major breaking changes early without slowing down development.
-Confidence in the system is low from such a check.
-- **Release Blocking:** Any issue here is a release blocker!
+- **Goal:** Quick initial check to catch major breaking changes early without slowing down development. Results here should not be used to confirm safety to release as testing is minimal.
+- **Release Blocking:** Any issue here should block the pull request.
 
 ### Nightly Runs
-- **Run:** Run regression suite - all UI, API and Data Validation tests.
-- **Goal:** Run all of the tests after hours so that time is not a factor. The next morning, a report can highlight any issues that need addressing.
+- **Run:** Run regression suite - relevant UI, API and Data Validation tests.
+- **Goal:** Run these tests after hours so that time is not a factor. The next morning, a report can highlight any issues that need addressing.
+- **Release Blocking:** These runs are typically looking for issues missed during the pull request smoke check. Issues should be identified and attempted to find the relevant breaking change so that it can be fixed. Nightly runs are intended to find issues during development and should not be used soley to confirm safety to release to production.
 
 ### Pre-release Runs
 - **Run:**  - Run all tests - smoke, new features, UI, API and data validation tests.
 - **Goal:** Run tests in an ad-hoc manner prior to a release. When complete, a report can highlight any issues that need addressing.
-- **Release Blocking:** Any issue here is not necessarily a blocker. Each issue would have to be reviewed to ensure its valid and not a one off issue (e.g. server went down for maintenance during the test run). If suspect an external factor or temporary environment issue, the failed tests can be rerun to confirm.
+- **Release Blocking:** The release is blocked until each issue is reviewed to ensure its valid and not a one off issue (e.g. server went down for maintenance during the test run). If suspecting an external factor or temporary environment issue, the failed tests can be rerun to confirm. Release should only be unblocked once all tests are confirmed passed.
 ---
 
 ## 5. Testing AI-Driven Behavior
